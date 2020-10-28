@@ -1,0 +1,55 @@
+name: sample-django
+services:
+- name: server
+  github:
+    repo: digitalocean/sample-django
+    branch: static
+    deploy_on_push: true
+  run_command: gunicorn --worker-tmp-dir /dev/shm mysite.wsgi
+  envs:
+  - key: DISABLE_COLLECTSTATIC
+    value: "1"
+    scope: BUILD_TIME
+  - key: DATABASE_URL
+    value: "${db.DATABASE_URL}"
+    scope: RUN_TIME
+  - key: DJANGO_ALLOWED_HOSTS
+    value: "${APP_DOMAIN}"
+    scope: RUN_TIME
+jobs:
+- name: migrate
+  kind: PRE_DEPLOY
+  github:
+    repo: digitalocean/sample-django
+    branch: static
+    deploy_on_push: true
+  run_command: python manage.py migrate
+  envs:
+  - key: DISABLE_COLLECTSTATIC
+    value: "1"
+    scope: BUILD_TIME
+  - key: DATABASE_URL
+    value: "${db.DATABASE_URL}"
+    scope: RUN_TIME
+static_sites:
+- name: static
+  github:
+    repo: digitalocean/sample-django
+    branch: static
+    deploy_on_push: true
+  # This happens as part of the Python/DJango buildpack:
+  # build_command: python manage.py collectstatic --noinput
+  output_dir: staticfiles
+  routes:
+  - path: /static
+databases:
+# Create a new dev DB:
+- name: db
+  engine: PG
+  version: "12"
+# Or bring an existing DB:
+# - name: db
+#   production: true
+#   cluster_name: mydb
+#   engine: PG
+#   version: "12"

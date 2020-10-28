@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 from pathlib import Path
 import os
+import sys
+import dj_database_url
 from urllib.parse import urlparse
 
 from django.core.management.utils import get_random_secret_key
@@ -85,20 +87,11 @@ if os.getenv("DEVELOPMENT_MODE", "False") == "True":
             "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
     }
-else:
+elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
     if os.getenv("DATABASE_URL", None) is None:
         raise Exception("DATABASE_URL environment variable not defined")
-    r = urlparse(os.environ.get("DATABASE_URL"))
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": os.path.relpath(r.path, "/"),
-            "USER": r.username,
-            "PASSWORD": r.password,
-            "HOST": r.hostname,
-            "PORT": r.port,
-            "OPTIONS": {"sslmode": "require"},
-        }
+        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
     }
 
 
