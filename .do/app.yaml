@@ -5,7 +5,7 @@ services:
     repo: digitalocean/sample-django
     branch: static
     deploy_on_push: true
-  run_command: python manage.py runserver 0.0.0.0:${PORT:-8080}
+  run_command: gunicorn --worker-tmp-dir /dev/shm mysite.wsgi
   envs:
   - key: DISABLE_COLLECTSTATIC
     value: "1"
