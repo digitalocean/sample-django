@@ -80,7 +80,7 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if os.getenv("DEVELOPMENT_MODE", "False") == "True":
+if os.getenv("DEVELOPMENT_MODE", "False") == "False":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
