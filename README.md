@@ -3,7 +3,7 @@
 These steps will get this sample Django application running for you using DigitalOcean.
 This application is the standard [Django Polls Tutorial](https://docs.djangoproject.com/en/3.1/intro/tutorial01/) with an added page at `/`.
 This app uses a Postgres database by default. If you want to change this to use 
-a local sqlite db (this will no persist deployments) then you'll need to set
+a local sqlite db (this will not persist deployments) then you'll need to set
 an environment variable specified below.
 
 **Note: Following these steps will result in charges for the use of DigitalOcean services**
