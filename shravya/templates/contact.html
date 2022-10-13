@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block titke %}Contact{% endblock titke %}
+
+{% block body %}
+<div class="container mt-3 py-3">
+    <h1 class="text-center">Contact Us</h1>
+    <form method="post" action="/contact">
+     
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name">
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+    </div>
+
+    <div class="form-group">
+        <label for="contact" class="form-label">Phone Number</label>
+        <input type="phone2numeric" class="form-control" id="contact" name="phone" placeholder="Enter your phone number">
+      </div>
+
+    <div class="form-group">
+        <label for="desc">Tell me about what you want to contact me ... </label>
+        <textarea class="form-control" id="desc" rows="3" name="desc"></textarea>
+    </div>
+
+    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+
+  </form>
+
+  </div>
+{% endblock body %}
+
