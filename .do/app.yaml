@@ -1,8 +1,8 @@
-name: sample-django
+name: neighborhood-watch
 services:
 - name: server
   github:
-    repo: digitalocean/sample-django
+    repo: The-Neighborhood-Watch/nbhw-backend
     branch: static
     deploy_on_push: true
   run_command: gunicorn --worker-tmp-dir /dev/shm mysite.wsgi
@@ -20,7 +20,7 @@ jobs:
 - name: migrate
   kind: PRE_DEPLOY
   github:
-    repo: digitalocean/sample-django
+    repo: The-Neighborhood-Watch/nbhw-backend
     branch: static
     deploy_on_push: true
   run_command: python manage.py migrate
@@ -34,7 +34,7 @@ jobs:
 static_sites:
 - name: static
   github:
-    repo: digitalocean/sample-django
+    repo: The-Neighborhood-Watch/nbhw-backend
     branch: static
     deploy_on_push: true
   # This happens as part of the Python/DJango buildpack:
